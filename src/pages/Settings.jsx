@@ -17,35 +17,36 @@ export default function Settings() {
   }
 
   return (
-    <div style={{ padding: 20 }}>
-      <Link to="/">⬅ Zurück</Link>
-      <h1>Einstellungen</h1>
+    <div className="p-6 max-w-md mx-auto">
+      <div>
+        <Link to="/" style={{ textDecoration: 'none', fontSize: 42, display: "flex", textAlign: "left", justifyContent: "flex-start" }}>⬅</Link>
+        <h1 className="text-2xl font-bold mb-4">Einstellungen</h1>
+      </div>
+      <p className="mb-4 text-gray-600">Welche Ligen möchtest du sehen?</p>
 
-      <p>Welche Ligen möchtest du sehen?</p>
+      <div className="grid grid-cols-2 gap-4 mt-6">
+        {ALL_LEAGUES.map((l) => {
+            const active = selected.includes(l.code);
 
-      <div style={{ display: "grid", gap: 10 }}>
-        {ALL_LEAGUES.map(l => (
-          <label key={l.code} style={{ display: "flex", gap: 10, alignItems: "center" }}>
-            <input
-              type="checkbox"
-              checked={selected.includes(l.code)}
-              onChange={() => toggle(l.code)}
-            />
-            {l.name}
-          </label>
-        ))}
+            return (
+            <button
+                key={l.code}
+                onClick={() => toggle(l.code)}
+                className={`w-full p-4 rounded-2xl text-lg font-semibold transition flex items-center justify-between border
+                ${active
+                    ? "bg-blue-600 text-white border-blue-600 shadow-md"
+                    : "bg-gray-200 text-gray-500 border-gray-300"
+                }`}
+            >
+                <span>{l.name}</span>
+            </button>
+            );
+        })}
       </div>
 
       <button
         onClick={save}
-        style={{
-          marginTop: 20,
-          padding: "10px 14px",
-          borderRadius: 10,
-          border: "none",
-          background: "black",
-          color: "white"
-        }}
+        className="mt-6 w-full bg-black text-white py-3 rounded-xl font-bold hover:bg-gray-800 transition"
       >
         Speichern
       </button>
